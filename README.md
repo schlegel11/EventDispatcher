@@ -1,6 +1,7 @@
 EventDispatcher
 ===============
 
-Easy to use event dispatcher for the java 1.8 environment
+**Easy to use event dispatcher for the java 1.8 environment**
 
-Coming soon...
+For more see:
+http://eventdispatcher.schlegel11.de
