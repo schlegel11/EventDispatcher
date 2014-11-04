@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Eventdispatcher by schlegel11</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Eventdispatcher</h1>
+        <h2>Easy to use event dispatcher for the java 1.8 environment</h2>
+        <a href="https://github.com/schlegel11/EventDispatcher" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h3>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h3>
+
+<p><strong>EventListener interface that extends the standard <a href="http://docs.oracle.com/javase/7/docs/api/java/util/EventListener.html">java.util.EventListener</a> interface:</strong></p>
+
+<div class="highlight highlight-java"><pre><span class="kn">import</span> <span class="nn">java.util.EventListener</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.EventObject</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">MyListener</span> <span class="kd">extends</span> <span class="n">EventListener</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">myEventMethod</span><span class="o">(</span><span class="n">EventObject</span> <span class="n">eventObject</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+
+<p><strong>Class that fires the event:</strong></p>
+
+<div class="highlight highlight-java"><pre><span class="kn">import</span> <span class="nn">java.util.EventObject</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">de.schlegel11.eventdispatcher.EventDispatcher</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MySomethingHappensClass</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">final</span> <span class="n">EventDispatcher</span> <span class="n">eventDispatcher</span> <span class="o">=</span> <span class="n">EventDispatcher</span><span class="o">.</span><span class="na">newInstance</span><span class="o">();</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addListener</span><span class="o">(</span><span class="n">MyListener</span> <span class="n">fireListener</span><span class="o">){</span>
+        <span class="n">eventDispatcher</span><span class="o">.</span><span class="na">addListener</span><span class="o">(</span><span class="n">MyListener</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">fireListener</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">removeListener</span><span class="o">(</span><span class="n">MyListener</span> <span class="n">listener</span><span class="o">){</span>
+        <span class="n">eventDispatcher</span><span class="o">.</span><span class="na">removeListener</span><span class="o">(</span><span class="n">MyListener</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">listener</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">removeAllListeners</span><span class="o">(){</span>
+        <span class="n">eventDispatcher</span><span class="o">.</span><span class="na">removeListenerType</span><span class="o">(</span><span class="n">MyListener</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">somethingHappens</span><span class="o">(){</span>
+        <span class="n">EventObject</span> <span class="n">eventObject</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">EventObject</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+        <span class="n">eventDispatcher</span><span class="o">.</span><span class="na">fireEvent</span><span class="o">(</span><span class="n">MyListener</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">l</span> <span class="o">-&gt;</span> <span class="n">l</span><span class="o">.</span><span class="na">myEventMethod</span><span class="o">(</span><span class="n">eventObject</span><span class="o">));</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+
+<h3>
+<a id="javadoc" class="anchor" href="#javadoc" aria-hidden="true"><span class="octicon octicon-link"></span></a>JavaDoc</h3>
+
+<p>For more details see:
+<a href="https://github.com/schlegel11/EventDispatcher/blob/feature/JavaDoc-Version-1.0/apidocs/index.html">Javadoc</a></p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/schlegel11/EventDispatcher/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/schlegel11/EventDispatcher/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/schlegel11/EventDispatcher"></a> is maintained by <a href="https://github.com/schlegel11">schlegel11</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
