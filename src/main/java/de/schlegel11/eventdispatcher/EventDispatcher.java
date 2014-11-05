@@ -39,9 +39,9 @@ public final class EventDispatcher {
      * A specific {@link java.util.EventListener} class type assigns many {@link java.util.EventListener} class instances.
      *
      * @param clazz    Represents a specific unique {@link java.util.EventListener} class type.
-     *                 If param is {@code null} an {@link java.lang.NullPointerException} is thrown.
+     *                 If param is {@code null} a {@link java.lang.NullPointerException} is thrown.
      * @param listener Represents a specific {@link java.util.EventListener} instance.
-     *                 If param is {@code null} an {@link java.lang.NullPointerException} is thrown.
+     *                 If param is {@code null} a {@link java.lang.NullPointerException} is thrown.
      * @return True if the current {@link de.schlegel11.eventdispatcher.EventDispatcher} did not already contain the specific {@code listener} instance.
      */
     public boolean addListener(Class<? extends EventListener> clazz, EventListener listener) {
@@ -115,7 +115,7 @@ public final class EventDispatcher {
      * <br>
      * fireEvent(SpecificEventListener.class, l {@literal ->} {
      * l.specificEventListenerMethod(...);
-     * l.anotherSpecificEventListenerMethod(..);
+     * l.anotherSpecificEventListenerMethod(...);
      * });
      * </pre></blockquote>
      *
