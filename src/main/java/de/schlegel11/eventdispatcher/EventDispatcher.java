@@ -1,5 +1,6 @@
 package de.schlegel11.eventdispatcher;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 
 import java.util.EventListener;
@@ -17,6 +18,7 @@ import java.util.function.Consumer;
 public final class EventDispatcher {
 
     private static final String IS_NULL = "Argument is null.";
+    private static final String ARGUMENT_MAX_CALLS = "Argument is less or equal 0 (except -1).";
     private final Map<Class<? extends EventListener>, EventDispatcherList> dispatchers = Maps.newHashMap();
 
     private EventDispatcher() {
@@ -39,26 +41,56 @@ public final class EventDispatcher {
      * A specific {@link java.util.EventListener} class type assigns many {@link java.util.EventListener} class instances.
      *
      * @param clazz    Represents a specific unique {@link java.util.EventListener} class type.
-     *                 If param is {@code null} an {@link java.lang.NullPointerException} is thrown.
+     *                 If param is {@code null} a {@link java.lang.NullPointerException} is thrown.
      * @param listener Represents a specific {@link java.util.EventListener} instance.
-     *                 If param is {@code null} an {@link java.lang.NullPointerException} is thrown.
+     *                 If param is {@code null} a {@link java.lang.NullPointerException} is thrown.
      * @return True if the current {@link de.schlegel11.eventdispatcher.EventDispatcher} did not already contain the specific {@code listener} instance.
      */
     public boolean addListener(Class<? extends EventListener> clazz, EventListener listener) {
+        return addListener(clazz, listener, EventListenerWrapper.INFINITE_CALLS);
+    }
+
+    /**
+     * Adds a new {@link java.util.EventListener} class instance with a maximum number of {@link java.util.EventListener} calls.
+     * <br>
+     * In case of infinite calls please use {@link #addListener(Class, java.util.EventListener)}
+     * <p>
+     * The {@link java.util.EventListener} class instance is assigned to a specific {@link java.util.EventListener} class type.
+     * <br>
+     * A specific {@link java.util.EventListener} class type assigns many {@link java.util.EventListener} class instances.
+     *
+     * @param clazz    Represents a specific unique {@link java.util.EventListener} class type.
+     *                 If param is {@code null} a {@link java.lang.NullPointerException} is thrown.
+     * @param listener Represents a specific {@link java.util.EventListener} instance.
+     *                 If param is {@code null} a {@link java.lang.NullPointerException} is thrown.
+     * @param maxCalls Represents a maximum number of calls for the specific {@link java.util.EventListener} instance.
+     *                 The value -1 represents infinite calls.
+     *                 If param is less or equal 0 (except -1) an {@link java.lang.IllegalArgumentException} is thrown.
+     * @return True if the current {@link de.schlegel11.eventdispatcher.EventDispatcher} did not already contain the specific {@code listener} instance.
+     */
+    public boolean addListener(Class<? extends EventListener> clazz, EventListener listener, int maxCalls) {
         Objects.requireNonNull(clazz, IS_NULL);
         Objects.requireNonNull(listener, IS_NULL);
-        return dispatchers.computeIfAbsent(clazz, v -> new EventDispatcherList()).addListener(listener);
+        Preconditions.checkArgument(maxCalls > 0 || maxCalls == EventListenerWrapper.INFINITE_CALLS, ARGUMENT_MAX_CALLS);
+        return dispatchers.computeIfAbsent(clazz, v -> new EventDispatcherList()).addListener(listener, maxCalls);
     }
 
     /**
      * Removes a {@link java.util.EventListener} class instance from a specific {@link java.util.EventListener} class type.
+     * <br>
+     * If the {@link java.util.EventListener} class type has no more {@link java.util.EventListener} class instances it will also be removed.
      *
      * @param clazz    Represents a specific {@link java.util.EventListener} class type.
      * @param listener Represents a specific {@link java.util.EventListener} instance.
      * @return True if the current {@link de.schlegel11.eventdispatcher.EventDispatcher} contains the specific {@code clazz} type and {@code listener} instance.
      */
     public boolean removeListener(Class<? extends EventListener> clazz, EventListener listener) {
-        return dispatchers.getOrDefault(clazz, EventDispatcherList.PSEUDO_EMPTY_DISPATCHER_LIST).removeListener(listener);
+        EventDispatcherList edl = dispatchers.getOrDefault(clazz, EventDispatcherList.PSEUDO_EMPTY_DISPATCHER_LIST);
+        boolean result = edl.removeListener(listener);
+        if (edl.isEmpty()) {
+            removeListenerType(clazz);
+        }
+        return result;
     }
 
     /**
@@ -69,6 +101,14 @@ public final class EventDispatcher {
      */
     public boolean removeListenerType(Class<? extends EventListener> clazz) {
         return Objects.nonNull(dispatchers.remove(clazz));
+    }
+
+    /**
+     * Removes all {@link java.util.EventListener} class type and listener instances.
+     * The current {@link de.schlegel11.eventdispatcher.EventDispatcher} will be empty after this call returns.
+     */
+    public void clear() {
+        dispatchers.clear();
     }
 
     /**
@@ -102,8 +142,36 @@ public final class EventDispatcher {
     }
 
     /**
+     * Returns the number of maximum calls for the specific {@link java.util.EventListener} class instance.
+     *
+     * @param clazz    Represents a specific {@link java.util.EventListener} class type.
+     * @param listener Represents a specific {@link java.util.EventListener} instance.
+     * @return The number of maximum calls for the specific {@link java.util.EventListener} class instance.
+     * <br>
+     * If specific {@link java.util.EventListener} instance did not exist returns 0.
+     */
+    public int getListenerMaxCalls(Class<? extends EventListener> clazz, EventListener listener) {
+        return dispatchers.getOrDefault(clazz, EventDispatcherList.PSEUDO_EMPTY_DISPATCHER_LIST).getListenerMaxCalls(listener);
+    }
+
+    /**
+     * Returns the number of current calls for the specific {@link java.util.EventListener} class instance.
+     *
+     * @param clazz    Represents a specific {@link java.util.EventListener} class type.
+     * @param listener Represents a specific {@link java.util.EventListener} instance.
+     * @return The number of current calls for the specific {@link java.util.EventListener} class instance.
+     * <br>
+     * If specific {@link java.util.EventListener} instance did not exist returns 0.
+     */
+    public int getListenerCurrentCalls(Class<? extends EventListener> clazz, EventListener listener) {
+        return dispatchers.getOrDefault(clazz, EventDispatcherList.PSEUDO_EMPTY_DISPATCHER_LIST).getListenerCurrentCalls(listener);
+    }
+
+    /**
      * Handel the {@link java.util.function.Consumer} lambda expression for all {@link java.util.EventListener} class instances of a
      * specific {@link java.util.EventListener} class type.
+     * <br>
+     * If the "maxCalls" ({@link #addListener(Class, java.util.EventListener, int)}) value of the {@link java.util.EventListener} class instance is reached the instance will be removed.
      * <br>
      * The {@link java.util.function.Consumer} input argument is automatically mapped to the {@code clazz} type parameter.
      * <p>
@@ -115,7 +183,7 @@ public final class EventDispatcher {
      * <br>
      * fireEvent(SpecificEventListener.class, l {@literal ->} {
      * l.specificEventListenerMethod(...);
-     * l.anotherSpecificEventListenerMethod(..);
+     * l.anotherSpecificEventListenerMethod(...);
      * });
      * </pre></blockquote>
      *
@@ -131,6 +199,9 @@ public final class EventDispatcher {
         if (Objects.nonNull(edl) && Objects.nonNull(consumer)) {
             //noinspection unchecked
             edl.fireEvent((Consumer<EventListener>) consumer);
+            if (edl.isEmpty()) {
+                removeListenerType(clazz);
+            }
             return true;
         }
         return false;
