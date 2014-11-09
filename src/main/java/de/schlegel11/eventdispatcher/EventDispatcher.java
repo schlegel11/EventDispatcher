@@ -13,7 +13,7 @@ import java.util.function.Consumer;
  * <p>
  *
  * @author Marcel Schlegel (schlegel11) on 20.10.14
- * @version 1.0
+ * @version 1.1
  */
 public final class EventDispatcher {
 
