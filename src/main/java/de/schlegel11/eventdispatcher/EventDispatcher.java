@@ -149,6 +149,8 @@ public final class EventDispatcher {
      * @return The number of maximum calls for the specific {@link java.util.EventListener} class instance.
      * <br>
      * If specific {@link java.util.EventListener} instance did not exist returns 0.
+     * <br>
+     * If specific {@link java.util.EventListener} instance have infinite calls returns -1.
      */
     public int getListenerMaxCalls(Class<? extends EventListener> clazz, EventListener listener) {
         return dispatchers.getOrDefault(clazz, EventDispatcherList.PSEUDO_EMPTY_DISPATCHER_LIST).getListenerMaxCalls(listener);
@@ -162,6 +164,8 @@ public final class EventDispatcher {
      * @return The number of current calls for the specific {@link java.util.EventListener} class instance.
      * <br>
      * If specific {@link java.util.EventListener} instance did not exist returns 0.
+     * <br>
+     * If specific {@link java.util.EventListener} instance have infinite calls returns 0.
      */
     public int getListenerCurrentCalls(Class<? extends EventListener> clazz, EventListener listener) {
         return dispatchers.getOrDefault(clazz, EventDispatcherList.PSEUDO_EMPTY_DISPATCHER_LIST).getListenerCurrentCalls(listener);
