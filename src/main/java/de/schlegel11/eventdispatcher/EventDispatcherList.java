@@ -45,8 +45,8 @@ final class EventDispatcherList {
 
     public void fireEvent(Consumer<EventListener> consumer) {
         for (EventListenerWrapper elw : listeners) {
-            consumer.accept(elw.getListener());
             elw.addCurrentCalls(elw.getMaxCalls() == EventListenerWrapper.INFINITE_CALLS ? 0 : 1);
+            consumer.accept(elw.getListener());
         }
         listeners.removeIf(elw -> elw.getMaxCalls() == elw.getCurrentCalls());
     }
