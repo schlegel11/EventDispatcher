@@ -212,13 +212,14 @@ class EventDispatcherTest extends Specification {
         eventDispatcher.addListener(EventListener, listener, 15)
         eventDispatcher.addListener(EventListener, anotherListener, 20)
         eventDispatcher.addListener(Object, anotherListener, 5)
+        eventDispatcher.addListener(Object, listener)
 
         expect:
         eventDispatcher.getListenerMaxCalls(EventListener, listener) == 15
         eventDispatcher.getListenerMaxCalls(EventListener, anotherListener) == 20
         eventDispatcher.getListenerMaxCalls(Object, anotherListener) == 5
         eventDispatcher.getListenerMaxCalls(String, anotherListener) == 0
-        eventDispatcher.getListenerMaxCalls(Object, listener) == 0
+        eventDispatcher.getListenerMaxCalls(Object, listener) == -1
         emptyEventDispatcher.getListenerMaxCalls(EventListener, listener) == 0
     }
 
@@ -229,6 +230,7 @@ class EventDispatcherTest extends Specification {
         eventDispatcher.addListener(EventListener, listener, 15)
         eventDispatcher.addListener(EventListener, anotherListener, 20)
         eventDispatcher.addListener(Object, anotherListener, 5)
+        eventDispatcher.addListener(Object, listener)
         eventDispatcher.fireEvent(EventListener, { l -> l.toString() })
         eventDispatcher.fireEvent(EventListener, { l -> l.toString() })
         eventDispatcher.fireEvent(EventListener, { l -> l.toString() })
@@ -244,6 +246,7 @@ class EventDispatcherTest extends Specification {
         eventDispatcher.getListenerCurrentCalls(Object, anotherListener) == 4
         eventDispatcher.fireEvent(Object, { l -> l.toString() })
         eventDispatcher.getListenerCurrentCalls(Object, anotherListener) == 0
+        eventDispatcher.getListenerCurrentCalls(Object, listener) == 0
         emptyEventDispatcher.getListenerCurrentCalls(Object, anotherListener) == 0
     }
 
