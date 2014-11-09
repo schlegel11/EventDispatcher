@@ -32,8 +32,14 @@
 <a id="download" class="anchor" href="#download" aria-hidden="true"><span class="octicon octicon-link"></span></a>Download</h3>
 
 <p><a href="http://www.schlegel11.de/EventDispatcher/releases/tag/v1.1"><strong>Release v1.1</strong></a>
-<br>
+</p><p>
 <a href="http://www.schlegel11.de/EventDispatcher/releases/tag/v1.0"><strong>Release v1.0</strong></a></p>
+
+<h3>
+<a id="javadoc" class="anchor" href="#javadoc" aria-hidden="true"><span class="octicon octicon-link"></span></a>JavaDoc</h3>
+
+<p>For more details see:
+<a href="http://eventdispatcher.schlegel11.de/apidocs">Javadoc</a></p>
 
 <h3>
 <a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h3>
@@ -47,38 +53,131 @@
     <span class="k">public</span> <span class="kt">void</span> <span class="nf">myEventMethod</span>(<span class="kt">EventObject</span> <span class="nv">eventObject</span>);
 }</pre></div>
 
+<div class="highlight highlight-java"><pre><span class="k">import</span> <span class="k">java.util.EventListener</span>;
+<span class="k">import</span> <span class="k">java.util.EventObject</span>;
+
+<span class="k">public</span> <span class="k">interface</span> <span class="nc">AnotherListener</span> <span class="k">extends</span> <span class="no">EventListener</span>{
+    <span class="k">public</span> <span class="kt">void</span> <span class="nf">anotherEventMethod</span>(<span class="kt">EventObject</span> <span class="nv">eventObject</span>, <span class="kt">int</span> <span class="nv">currentCalls</span>);
+}</pre></div>
+
 <p><strong>Class that fires the event:</strong></p>
 
 <div class="highlight highlight-java"><pre><span class="k">import</span> <span class="k">java.util.EventObject</span>;
 <span class="k">import</span> <span class="k">de.schlegel11.eventdispatcher.EventDispatcher</span>;
 
 <span class="k">public</span> <span class="k">class</span> <span class="nc">MySomethingHappensClass</span> {
-
     <span class="k">private</span> <span class="k">final</span> <span class="kt">EventDispatcher</span> eventDispatcher <span class="o">=</span> <span class="kt">EventDispatcher</span><span class="o">.</span>newInstance();
 
-    <span class="k">public</span> <span class="kt">void</span> <span class="nf">addListener</span>(<span class="kt">MyListener</span> <span class="nv">fireListener</span>){
-        eventDispatcher<span class="o">.</span>addListener(<span class="kt">MyListener</span><span class="o">.</span>class, fireListener);
+    <span class="k">public</span> <span class="kt">void</span> <span class="nf">addMyListenerListener</span>(<span class="kt">MyListener</span> <span class="nv">listener</span>){
+        eventDispatcher<span class="o">.</span>addListener(<span class="kt">MyListener</span><span class="o">.</span>class, listener);
     }
 
-    <span class="k">public</span> <span class="kt">void</span> <span class="nf">removeListener</span>(<span class="kt">MyListener</span> <span class="nv">listener</span>){
+    <span class="k">public</span> <span class="kt">void</span> <span class="nf">addAnotherListener</span>(<span class="kt">AnotherListener</span> <span class="nv">listener</span>){
+        eventDispatcher<span class="o">.</span>addListener(<span class="kt">AnotherListener</span><span class="o">.</span>class, listener, <span class="m">3</span>);
+    }
+
+    <span class="k">public</span> <span class="kt">void</span> <span class="nf">removeMyListener</span>(<span class="kt">MyListener</span> <span class="nv">listener</span>){
         eventDispatcher<span class="o">.</span>removeListener(<span class="kt">MyListener</span><span class="o">.</span>class, listener);
     }
 
-    <span class="k">public</span> <span class="kt">void</span> <span class="nf">removeAllListeners</span>(){
+    <span class="k">public</span> <span class="kt">void</span> <span class="nf">removeAnotherListener</span>(<span class="kt">AnotherListener</span> <span class="nv">listener</span>){
+        eventDispatcher<span class="o">.</span>removeListener(<span class="kt">AnotherListener</span><span class="o">.</span>class, listener);
+    }
+
+    <span class="k">public</span> <span class="kt">void</span> <span class="nf">removeAllMyListeners</span>(){
         eventDispatcher<span class="o">.</span>removeListenerType(<span class="kt">MyListener</span><span class="o">.</span>class);
+    }
+
+    <span class="k">public</span> <span class="kt">void</span> <span class="nf">removeAllAnotherListeners</span>(){
+        eventDispatcher<span class="o">.</span>removeListenerType(<span class="kt">AnotherListener</span><span class="o">.</span>class);
+    }
+
+    <span class="k">public</span> <span class="kt">void</span> <span class="nf">removeAllListeners</span>(){
+        eventDispatcher<span class="o">.</span>clear();
     }
 
     <span class="k">public</span> <span class="kt">void</span> <span class="nf">somethingHappens</span>(){
         <span class="kt">EventObject</span> eventObject <span class="o">=</span> <span class="k">new</span> <span class="kt">EventObject</span>(<span class="nb">this</span>);
+
+        <span class="kt">System</span><span class="o">.</span>out<span class="o">.</span>println(<span class="s2">"Fire MyListener"</span>);
         eventDispatcher<span class="o">.</span>fireEvent(<span class="kt">MyListener</span><span class="o">.</span>class, l <span class="o">-</span><span class="o">&gt;</span> l<span class="o">.</span>myEventMethod(eventObject));
+
+        eventDispatcher<span class="o">.</span>fireEvent(<span class="kt">AnotherListener</span><span class="o">.</span>class, l <span class="o">-</span><span class="o">&gt;</span> {
+
+            <span class="kt">System</span><span class="o">.</span>out<span class="o">.</span>println(<span class="s2">"Fire AnotherListener"</span>);
+            <span class="kt">int</span> maxCalls <span class="o">=</span> eventDispatcher<span class="o">.</span>getListenerMaxCalls(<span class="kt">AnotherListener</span><span class="o">.</span>class, l);   
+            <span class="kt">int</span> currentCalls <span class="o">=</span> eventDispatcher<span class="o">.</span>getListenerCurrentCalls(<span class="kt">AnotherListener</span><span class="o">.</span>class, l);
+
+            <span class="k">if</span>(maxCalls <span class="o">==</span> currentCalls){
+                <span class="kt">System</span><span class="o">.</span>out<span class="o">.</span>println(<span class="s2">"!!AnotherListener last call!!"</span>);
+            }
+            l<span class="o">.</span>anotherEventMethod(eventObject, currentCalls);
+            });
     }
 }</pre></div>
 
-<h3>
-<a id="javadoc" class="anchor" href="#javadoc" aria-hidden="true"><span class="octicon octicon-link"></span></a>JavaDoc</h3>
+<p><strong>Main method:</strong></p>
 
-<p>For more details see:
-<a href="http://eventdispatcher.schlegel11.de/apidocs">Javadoc</a></p>
+<div class="highlight highlight-java"><pre>    <span class="k">public</span> <span class="k">static</span> <span class="kt">void</span> main(<span class="kt">String</span>[] args) {
+        <span class="kt">MySomethingHappensClass</span> mshc <span class="o">=</span> <span class="k">new</span> <span class="kt">MySomethingHappensClass</span>();
+
+        mshc<span class="o">.</span>addMyListenerListener(<span class="k">new</span> <span class="kt">MyListener</span>() {
+            <span class="k">private</span> <span class="kt">int</span> counter <span class="o">=</span> <span class="m">0</span>;
+
+            <span class="kt">@Override</span>
+            <span class="k">public</span> <span class="kt">void</span> <span class="nf">myEventMethod</span>(<span class="kt">EventObject</span> <span class="nv">eventObject</span>) {
+                <span class="kt">System</span><span class="o">.</span>out<span class="o">.</span>println((<span class="o">++</span>counter)
+                        <span class="o">+</span> <span class="s2">" - MyEventMethod is called <span class="sc">\n</span>"</span>);
+            }
+        });
+
+        mshc<span class="o">.</span>addAnotherListener(<span class="k">new</span> <span class="kt">AnotherListener</span>() {
+
+            <span class="kt">@Override</span>
+            <span class="k">public</span> <span class="kt">void</span> <span class="nf">anotherEventMethod</span>(<span class="kt">EventObject</span> <span class="nv">eventObject</span>,
+                    <span class="kt">int</span> <span class="nv">currentCalls</span>) {
+                <span class="kt">System</span><span class="o">.</span>out<span class="o">.</span>println(currentCalls
+                        <span class="o">+</span> <span class="s2">" - AnotherEventMethod is called <span class="sc">\n</span>"</span>);
+            }
+        });
+
+        <span class="k">for</span> (<span class="kt">int</span> i <span class="o">=</span> <span class="m">0</span>; i <span class="o">&lt;</span> <span class="m">5</span>; i<span class="o">++</span>) {
+            mshc<span class="o">.</span>somethingHappens();
+        }
+
+        <span class="kt">System</span><span class="o">.</span>out<span class="o">.</span>println(<span class="s2">"Remove all listeners"</span>);
+        mshc<span class="o">.</span>removeAllListeners();
+    }</pre></div>
+
+<p><strong>Console output:</strong></p>
+
+<pre><code>Fire MyListener
+1 - MyEventMethod is called 
+
+Fire AnotherListener
+1 - AnotherEventMethod is called 
+
+Fire MyListener
+2 - MyEventMethod is called 
+
+Fire AnotherListener
+2 - AnotherEventMethod is called 
+
+Fire MyListener
+3 - MyEventMethod is called 
+
+Fire AnotherListener
+!!AnotherListener last call!!
+3 - AnotherEventMethod is called 
+
+Fire MyListener
+4 - MyEventMethod is called 
+
+Fire MyListener
+5 - MyEventMethod is called 
+
+Remove all listeners
+</code></pre>
         </section>
 
         <aside id="sidebar">
