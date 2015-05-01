@@ -29,124 +29,146 @@
       <div class="inner clearfix">
         <section id="main-content">
           <h3>
-<a id="download" class="anchor" href="#download" aria-hidden="true"><span class="octicon octicon-link"></span></a>Download</h3>
+<a id="maven" class="anchor" href="#maven" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Maven</strong>
+</h3>
 
-<p><a href="http://www.schlegel11.de/EventDispatcher/releases/tag/v1.1"><strong>Release v1.1</strong></a>
-</p><p>
+<div class="highlight highlight-xml"><pre>&lt;<span class="pl-ent">dependency</span>&gt;
+    &lt;<span class="pl-ent">groupId</span>&gt;de.schlegel11&lt;/<span class="pl-ent">groupId</span>&gt;
+    &lt;<span class="pl-ent">artifactId</span>&gt;event-dispatcher&lt;/<span class="pl-ent">artifactId</span>&gt;
+    &lt;<span class="pl-ent">version</span>&gt;1.1&lt;/<span class="pl-ent">version</span>&gt;
+&lt;/<span class="pl-ent">dependency</span>&gt;</pre></div>
+
+<h3>
+<a id="download" class="anchor" href="#download" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Download</strong>
+</h3>
+
+<h3>
+<a id="latest-version" class="anchor" href="#latest-version" aria-hidden="true"><span class="octicon octicon-link"></span></a>Latest Version</h3>
+
+<p><br>
+<a href="http://www.schlegel11.de/EventDispatcher/releases/tag/v1.1"><strong>Release v1.1</strong></a>
+</p><p></p>
+
+<h3>
+<a id="archived-versions-not-recommended" class="anchor" href="#archived-versions-not-recommended" aria-hidden="true"><span class="octicon octicon-link"></span></a>Archived Versions (not recommended)</h3>
+
+<p><br>
 <a href="http://www.schlegel11.de/EventDispatcher/releases/tag/v1.0"><strong>Release v1.0</strong></a></p>
 
 <h3>
-<a id="javadoc" class="anchor" href="#javadoc" aria-hidden="true"><span class="octicon octicon-link"></span></a>JavaDoc</h3>
+<a id="javadoc" class="anchor" href="#javadoc" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>JavaDoc</strong>
+</h3>
 
 <p>For more details see:
 <a href="http://eventdispatcher.schlegel11.de/apidocs">Javadoc</a></p>
 
 <h3>
-<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h3>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Usage</strong>
+</h3>
 
 <p><strong>EventListener interface that extends the standard <a href="http://docs.oracle.com/javase/7/docs/api/java/util/EventListener.html">java.util.EventListener</a> interface:</strong></p>
 
-<div class="highlight highlight-java"><pre><span class="k">import</span> <span class="k">java.util.EventListener</span>;
-<span class="k">import</span> <span class="k">java.util.EventObject</span>;
+<div class="highlight highlight-java"><pre><span class="pl-k">import</span> <span class="pl-smi">java.util.EventListener</span>;
+<span class="pl-k">import</span> <span class="pl-smi">java.util.EventObject</span>;
 
-<span class="k">public</span> <span class="k">interface</span> <span class="nc">MyListener</span> <span class="k">extends</span> <span class="no">EventListener</span> {
-    <span class="k">public</span> <span class="kt">void</span> <span class="nf">myEventMethod</span>(<span class="kt">EventObject</span> <span class="nv">eventObject</span>);
+<span class="pl-k">public</span> <span class="pl-k">interface</span> <span class="pl-en">MyListener</span> <span class="pl-k">extends</span> <span class="pl-e">EventListener</span> {
+    <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">myEventMethod</span>(<span class="pl-smi">EventObject</span> <span class="pl-v">eventObject</span>);
 }</pre></div>
 
-<div class="highlight highlight-java"><pre><span class="k">import</span> <span class="k">java.util.EventListener</span>;
-<span class="k">import</span> <span class="k">java.util.EventObject</span>;
+<div class="highlight highlight-java"><pre><span class="pl-k">import</span> <span class="pl-smi">java.util.EventListener</span>;
+<span class="pl-k">import</span> <span class="pl-smi">java.util.EventObject</span>;
 
-<span class="k">public</span> <span class="k">interface</span> <span class="nc">AnotherListener</span> <span class="k">extends</span> <span class="no">EventListener</span>{
-    <span class="k">public</span> <span class="kt">void</span> <span class="nf">anotherEventMethod</span>(<span class="kt">EventObject</span> <span class="nv">eventObject</span>, <span class="kt">int</span> <span class="nv">currentCalls</span>);
+<span class="pl-k">public</span> <span class="pl-k">interface</span> <span class="pl-en">AnotherListener</span> <span class="pl-k">extends</span> <span class="pl-e">EventListener</span>{
+    <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">anotherEventMethod</span>(<span class="pl-smi">EventObject</span> <span class="pl-v">eventObject</span>, <span class="pl-k">int</span> <span class="pl-v">currentCalls</span>);
 }</pre></div>
 
 <p><strong>Class that fires the event:</strong></p>
 
-<div class="highlight highlight-java"><pre><span class="k">import</span> <span class="k">java.util.EventObject</span>;
-<span class="k">import</span> <span class="k">de.schlegel11.eventdispatcher.EventDispatcher</span>;
+<div class="highlight highlight-java"><pre><span class="pl-k">import</span> <span class="pl-smi">java.util.EventObject</span>;
+<span class="pl-k">import</span> <span class="pl-smi">de.schlegel11.eventdispatcher.EventDispatcher</span>;
 
-<span class="k">public</span> <span class="k">class</span> <span class="nc">MySomethingHappensClass</span> {
-    <span class="k">private</span> <span class="k">final</span> <span class="kt">EventDispatcher</span> eventDispatcher <span class="o">=</span> <span class="kt">EventDispatcher</span><span class="o">.</span>newInstance();
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">MySomethingHappensClass</span> {
+    <span class="pl-k">private</span> <span class="pl-k">final</span> <span class="pl-smi">EventDispatcher</span> eventDispatcher <span class="pl-k">=</span> <span class="pl-smi">EventDispatcher</span><span class="pl-k">.</span>newInstance();
 
-    <span class="k">public</span> <span class="kt">void</span> <span class="nf">addMyListenerListener</span>(<span class="kt">MyListener</span> <span class="nv">listener</span>){
-        eventDispatcher<span class="o">.</span>addListener(<span class="kt">MyListener</span><span class="o">.</span>class, listener);
+    <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">addMyListenerListener</span>(<span class="pl-smi">MyListener</span> <span class="pl-v">listener</span>){
+        eventDispatcher<span class="pl-k">.</span>addListener(<span class="pl-smi">MyListener</span><span class="pl-k">.</span>class, listener);
     }
 
-    <span class="k">public</span> <span class="kt">void</span> <span class="nf">addAnotherListener</span>(<span class="kt">AnotherListener</span> <span class="nv">listener</span>){
-        eventDispatcher<span class="o">.</span>addListener(<span class="kt">AnotherListener</span><span class="o">.</span>class, listener, <span class="m">3</span>);
+    <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">addAnotherListener</span>(<span class="pl-smi">AnotherListener</span> <span class="pl-v">listener</span>){
+        eventDispatcher<span class="pl-k">.</span>addListener(<span class="pl-smi">AnotherListener</span><span class="pl-k">.</span>class, listener, <span class="pl-c1">3</span>);
     }
 
-    <span class="k">public</span> <span class="kt">void</span> <span class="nf">removeMyListener</span>(<span class="kt">MyListener</span> <span class="nv">listener</span>){
-        eventDispatcher<span class="o">.</span>removeListener(<span class="kt">MyListener</span><span class="o">.</span>class, listener);
+    <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">removeMyListener</span>(<span class="pl-smi">MyListener</span> <span class="pl-v">listener</span>){
+        eventDispatcher<span class="pl-k">.</span>removeListener(<span class="pl-smi">MyListener</span><span class="pl-k">.</span>class, listener);
     }
 
-    <span class="k">public</span> <span class="kt">void</span> <span class="nf">removeAnotherListener</span>(<span class="kt">AnotherListener</span> <span class="nv">listener</span>){
-        eventDispatcher<span class="o">.</span>removeListener(<span class="kt">AnotherListener</span><span class="o">.</span>class, listener);
+    <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">removeAnotherListener</span>(<span class="pl-smi">AnotherListener</span> <span class="pl-v">listener</span>){
+        eventDispatcher<span class="pl-k">.</span>removeListener(<span class="pl-smi">AnotherListener</span><span class="pl-k">.</span>class, listener);
     }
 
-    <span class="k">public</span> <span class="kt">void</span> <span class="nf">removeAllMyListeners</span>(){
-        eventDispatcher<span class="o">.</span>removeListenerType(<span class="kt">MyListener</span><span class="o">.</span>class);
+    <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">removeAllMyListeners</span>(){
+        eventDispatcher<span class="pl-k">.</span>removeListenerType(<span class="pl-smi">MyListener</span><span class="pl-k">.</span>class);
     }
 
-    <span class="k">public</span> <span class="kt">void</span> <span class="nf">removeAllAnotherListeners</span>(){
-        eventDispatcher<span class="o">.</span>removeListenerType(<span class="kt">AnotherListener</span><span class="o">.</span>class);
+    <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">removeAllAnotherListeners</span>(){
+        eventDispatcher<span class="pl-k">.</span>removeListenerType(<span class="pl-smi">AnotherListener</span><span class="pl-k">.</span>class);
     }
 
-    <span class="k">public</span> <span class="kt">void</span> <span class="nf">removeAllListeners</span>(){
-        eventDispatcher<span class="o">.</span>clear();
+    <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">removeAllListeners</span>(){
+        eventDispatcher<span class="pl-k">.</span>clear();
     }
 
-    <span class="k">public</span> <span class="kt">void</span> <span class="nf">somethingHappens</span>(){
-        <span class="kt">EventObject</span> eventObject <span class="o">=</span> <span class="k">new</span> <span class="kt">EventObject</span>(<span class="nb">this</span>);
+    <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">somethingHappens</span>(){
+        <span class="pl-smi">EventObject</span> eventObject <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">EventObject</span>(<span class="pl-v">this</span>);
 
-        <span class="kt">System</span><span class="o">.</span>out<span class="o">.</span>println(<span class="s2">"Fire MyListener"</span>);
-        eventDispatcher<span class="o">.</span>fireEvent(<span class="kt">MyListener</span><span class="o">.</span>class, l <span class="o">-</span><span class="o">&gt;</span> l<span class="o">.</span>myEventMethod(eventObject));
+        <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>Fire MyListener<span class="pl-pds">"</span></span>);
+        eventDispatcher<span class="pl-k">.</span>fireEvent(<span class="pl-smi">MyListener</span><span class="pl-k">.</span>class, l <span class="pl-k">-</span><span class="pl-k">&gt;</span> l<span class="pl-k">.</span>myEventMethod(eventObject));
 
-        eventDispatcher<span class="o">.</span>fireEvent(<span class="kt">AnotherListener</span><span class="o">.</span>class, l <span class="o">-</span><span class="o">&gt;</span> {
+        eventDispatcher<span class="pl-k">.</span>fireEvent(<span class="pl-smi">AnotherListener</span><span class="pl-k">.</span>class, l <span class="pl-k">-</span><span class="pl-k">&gt;</span> {
 
-            <span class="kt">System</span><span class="o">.</span>out<span class="o">.</span>println(<span class="s2">"Fire AnotherListener"</span>);
-            <span class="kt">int</span> maxCalls <span class="o">=</span> eventDispatcher<span class="o">.</span>getListenerMaxCalls(<span class="kt">AnotherListener</span><span class="o">.</span>class, l);   
-            <span class="kt">int</span> currentCalls <span class="o">=</span> eventDispatcher<span class="o">.</span>getListenerCurrentCalls(<span class="kt">AnotherListener</span><span class="o">.</span>class, l);
+            <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>Fire AnotherListener<span class="pl-pds">"</span></span>);
+            <span class="pl-k">int</span> maxCalls <span class="pl-k">=</span> eventDispatcher<span class="pl-k">.</span>getListenerMaxCalls(<span class="pl-smi">AnotherListener</span><span class="pl-k">.</span>class, l);   
+            <span class="pl-k">int</span> currentCalls <span class="pl-k">=</span> eventDispatcher<span class="pl-k">.</span>getListenerCurrentCalls(<span class="pl-smi">AnotherListener</span><span class="pl-k">.</span>class, l);
 
-            <span class="k">if</span>(maxCalls <span class="o">==</span> currentCalls){
-                <span class="kt">System</span><span class="o">.</span>out<span class="o">.</span>println(<span class="s2">"!!AnotherListener last call!!"</span>);
+            <span class="pl-k">if</span>(maxCalls <span class="pl-k">==</span> currentCalls){
+                <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>!!AnotherListener last call!!<span class="pl-pds">"</span></span>);
             }
-            l<span class="o">.</span>anotherEventMethod(eventObject, currentCalls);
+            l<span class="pl-k">.</span>anotherEventMethod(eventObject, currentCalls);
             });
     }
 }</pre></div>
 
 <p><strong>Main method:</strong></p>
 
-<div class="highlight highlight-java"><pre>    <span class="k">public</span> <span class="k">static</span> <span class="kt">void</span> main(<span class="kt">String</span>[] args) {
-        <span class="kt">MySomethingHappensClass</span> mshc <span class="o">=</span> <span class="k">new</span> <span class="kt">MySomethingHappensClass</span>();
+<div class="highlight highlight-java"><pre>    <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-k">void</span> main(<span class="pl-k">String</span>[] args) {
+        <span class="pl-smi">MySomethingHappensClass</span> mshc <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">MySomethingHappensClass</span>();
 
-        mshc<span class="o">.</span>addMyListenerListener(<span class="k">new</span> <span class="kt">MyListener</span>() {
-            <span class="k">private</span> <span class="kt">int</span> counter <span class="o">=</span> <span class="m">0</span>;
+        mshc<span class="pl-k">.</span>addMyListenerListener(<span class="pl-k">new</span> <span class="pl-smi">MyListener</span>() {
+            <span class="pl-k">private</span> <span class="pl-k">int</span> counter <span class="pl-k">=</span> <span class="pl-c1">0</span>;
 
-            <span class="kt">@Override</span>
-            <span class="k">public</span> <span class="kt">void</span> <span class="nf">myEventMethod</span>(<span class="kt">EventObject</span> <span class="nv">eventObject</span>) {
-                <span class="kt">System</span><span class="o">.</span>out<span class="o">.</span>println((<span class="o">++</span>counter)
-                        <span class="o">+</span> <span class="s2">" - MyEventMethod is called <span class="sc">\n</span>"</span>);
+            <span class="pl-k">@Override</span>
+            <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">myEventMethod</span>(<span class="pl-smi">EventObject</span> <span class="pl-v">eventObject</span>) {
+                <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println((<span class="pl-k">++</span>counter)
+                        <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span> - MyEventMethod is called <span class="pl-cce">\n</span><span class="pl-pds">"</span></span>);
             }
         });
 
-        mshc<span class="o">.</span>addAnotherListener(<span class="k">new</span> <span class="kt">AnotherListener</span>() {
+        mshc<span class="pl-k">.</span>addAnotherListener(<span class="pl-k">new</span> <span class="pl-smi">AnotherListener</span>() {
 
-            <span class="kt">@Override</span>
-            <span class="k">public</span> <span class="kt">void</span> <span class="nf">anotherEventMethod</span>(<span class="kt">EventObject</span> <span class="nv">eventObject</span>,
-                    <span class="kt">int</span> <span class="nv">currentCalls</span>) {
-                <span class="kt">System</span><span class="o">.</span>out<span class="o">.</span>println(currentCalls
-                        <span class="o">+</span> <span class="s2">" - AnotherEventMethod is called <span class="sc">\n</span>"</span>);
+            <span class="pl-k">@Override</span>
+            <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">anotherEventMethod</span>(<span class="pl-smi">EventObject</span> <span class="pl-v">eventObject</span>,
+                    <span class="pl-k">int</span> <span class="pl-v">currentCalls</span>) {
+                <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(currentCalls
+                        <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span> - AnotherEventMethod is called <span class="pl-cce">\n</span><span class="pl-pds">"</span></span>);
             }
         });
 
-        <span class="k">for</span> (<span class="kt">int</span> i <span class="o">=</span> <span class="m">0</span>; i <span class="o">&lt;</span> <span class="m">5</span>; i<span class="o">++</span>) {
-            mshc<span class="o">.</span>somethingHappens();
+        <span class="pl-k">for</span> (<span class="pl-k">int</span> i <span class="pl-k">=</span> <span class="pl-c1">0</span>; i <span class="pl-k">&lt;</span> <span class="pl-c1">5</span>; i<span class="pl-k">++</span>) {
+            mshc<span class="pl-k">.</span>somethingHappens();
         }
 
-        <span class="kt">System</span><span class="o">.</span>out<span class="o">.</span>println(<span class="s2">"Remove all listeners"</span>);
-        mshc<span class="o">.</span>removeAllListeners();
+        <span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">"</span>Remove all listeners<span class="pl-pds">"</span></span>);
+        mshc<span class="pl-k">.</span>removeAllListeners();
     }</pre></div>
 
 <p><strong>Console output:</strong></p>
