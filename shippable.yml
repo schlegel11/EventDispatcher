@@ -1,9 +1,15 @@
 # language setting
 language: java
+
 # jdk tag
 jdk:
  - oraclejdk8
+
 # include
 branches:
   only:
     - master
+
+# create reports
+after_success:
+   - mvn test -P shippable-reports
