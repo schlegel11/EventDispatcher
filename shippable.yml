@@ -13,3 +13,9 @@ branches:
 # create reports
 after_success:
    - mvn test -P shippable-reports
+
+# notify
+notifications:
+     email:
+         recipients:
+             - develop@schlegel11.de
