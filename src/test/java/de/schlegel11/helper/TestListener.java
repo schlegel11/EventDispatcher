@@ -7,6 +7,6 @@ import java.util.EventObject;
  * Created by schlegel11 on 01.11.14.
  */
 public interface TestListener extends EventListener {
-    public void testMethod(EventObject eventObject);
-    public void anotherTestMethod(EventObject eventObject);
+    void testMethod(EventObject eventObject);
+    void anotherTestMethod(EventObject eventObject);
 }
