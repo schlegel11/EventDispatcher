@@ -17,11 +17,11 @@ final class EventDispatcherList {
     public static final EventDispatcherList PSEUDO_EMPTY_DISPATCHER_LIST = new EventDispatcherList();
     private final Set<EventListenerWrapper> listeners = Sets.newHashSet();
 
-    public boolean addListener(EventListener listener, int numberOfCalls) {
+    public boolean addListener(final EventListener listener, final int numberOfCalls) {
         return listeners.add(new EventListenerWrapper(listener, numberOfCalls));
     }
 
-    public boolean removeListener(EventListener listener) {
+    public boolean removeListener(final EventListener listener) {
         return listeners.removeIf(elw -> elw.getListener() == listener);
     }
 
@@ -29,21 +29,21 @@ final class EventDispatcherList {
         return listeners.size();
     }
 
-    public int getListenerMaxCalls(EventListener listener) {
+    public int getListenerMaxCalls(final EventListener listener) {
         EventListenerWrapper elw = getElw(listener);
-        return Objects.isNull(elw) ? 0 : elw.getMaxCalls();
+        return elw.getMaxCalls();
     }
 
-    public int getListenerCurrentCalls(EventListener listener) {
+    public int getListenerCurrentCalls(final EventListener listener) {
         EventListenerWrapper elw = getElw(listener);
-        return Objects.isNull(elw) ? 0 : elw.getCurrentCalls();
+        return elw.getCurrentCalls();
     }
 
     public boolean isEmpty() {
         return listeners.isEmpty();
     }
 
-    public void fireEvent(Consumer<EventListener> consumer) {
+    public void fireEvent(final Consumer<EventListener> consumer) {
         for (EventListenerWrapper elw : listeners) {
             elw.addCurrentCalls(elw.getMaxCalls() == EventListenerWrapper.INFINITE_CALLS ? 0 : 1);
             consumer.accept(elw.getListener());
@@ -57,7 +57,7 @@ final class EventDispatcherList {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }
@@ -68,9 +68,8 @@ final class EventDispatcherList {
         return Objects.equals(this.listeners, other.listeners);
     }
 
-    private EventListenerWrapper getElw(EventListener listener) {
+    private EventListenerWrapper getElw(final EventListener listener) {
         Stream<EventListenerWrapper> stream = listeners.stream().filter(elw -> elw.getListener() == listener);
-        Optional<EventListenerWrapper> optional = stream.findFirst();
-        return optional.isPresent() ? optional.get() : null;
+        return stream.findFirst().orElse(EventListenerWrapper.DUMMY_ELW);
     }
 }

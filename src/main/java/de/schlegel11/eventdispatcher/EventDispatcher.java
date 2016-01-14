@@ -46,7 +46,7 @@ public final class EventDispatcher {
      *                 If param is {@code null} a {@link java.lang.NullPointerException} is thrown.
      * @return True if the current {@link de.schlegel11.eventdispatcher.EventDispatcher} did not already contain the specific {@code listener} instance.
      */
-    public boolean addListener(Class<? extends EventListener> clazz, EventListener listener) {
+    public boolean addListener(final Class<? extends EventListener> clazz, final EventListener listener) {
         return addListener(clazz, listener, EventListenerWrapper.INFINITE_CALLS);
     }
 
@@ -68,7 +68,7 @@ public final class EventDispatcher {
      *                 If param is less or equal 0 (except -1) an {@link java.lang.IllegalArgumentException} is thrown.
      * @return True if the current {@link de.schlegel11.eventdispatcher.EventDispatcher} did not already contain the specific {@code listener} instance.
      */
-    public boolean addListener(Class<? extends EventListener> clazz, EventListener listener, int maxCalls) {
+    public boolean addListener(final Class<? extends EventListener> clazz, final EventListener listener, final int maxCalls) {
         Objects.requireNonNull(clazz, IS_NULL);
         Objects.requireNonNull(listener, IS_NULL);
         Preconditions.checkArgument(maxCalls > 0 || maxCalls == EventListenerWrapper.INFINITE_CALLS, ARGUMENT_MAX_CALLS);
@@ -84,7 +84,7 @@ public final class EventDispatcher {
      * @param listener Represents a specific {@link java.util.EventListener} instance.
      * @return True if the current {@link de.schlegel11.eventdispatcher.EventDispatcher} contains the specific {@code clazz} type and {@code listener} instance.
      */
-    public boolean removeListener(Class<? extends EventListener> clazz, EventListener listener) {
+    public boolean removeListener(final Class<? extends EventListener> clazz, final EventListener listener) {
         EventDispatcherList edl = dispatchers.getOrDefault(clazz, EventDispatcherList.PSEUDO_EMPTY_DISPATCHER_LIST);
         boolean result = edl.removeListener(listener);
         if (edl.isEmpty()) {
@@ -99,7 +99,7 @@ public final class EventDispatcher {
      * @param clazz Represents a specific {@link java.util.EventListener} class type.
      * @return True if the current {@link de.schlegel11.eventdispatcher.EventDispatcher} contains the specific {@code clazz} type and removed it.
      */
-    public boolean removeListenerType(Class<? extends EventListener> clazz) {
+    public boolean removeListenerType(final Class<? extends EventListener> clazz) {
         return Objects.nonNull(dispatchers.remove(clazz));
     }
 
@@ -128,7 +128,7 @@ public final class EventDispatcher {
      * <br>
      * If specific {@code clazz} type did not exist returns 0.
      */
-    public int getListenerCount(Class<? extends EventListener> clazz) {
+    public int getListenerCount(final Class<? extends EventListener> clazz) {
         return dispatchers.getOrDefault(clazz, EventDispatcherList.PSEUDO_EMPTY_DISPATCHER_LIST).getListenerCount();
     }
 
@@ -152,7 +152,7 @@ public final class EventDispatcher {
      * <br>
      * If specific {@link java.util.EventListener} instance have infinite calls returns -1.
      */
-    public int getListenerMaxCalls(Class<? extends EventListener> clazz, EventListener listener) {
+    public int getListenerMaxCalls(final Class<? extends EventListener> clazz, final EventListener listener) {
         return dispatchers.getOrDefault(clazz, EventDispatcherList.PSEUDO_EMPTY_DISPATCHER_LIST).getListenerMaxCalls(listener);
     }
 
@@ -167,7 +167,7 @@ public final class EventDispatcher {
      * <br>
      * If specific {@link java.util.EventListener} instance have infinite calls returns 0.
      */
-    public int getListenerCurrentCalls(Class<? extends EventListener> clazz, EventListener listener) {
+    public int getListenerCurrentCalls(final Class<? extends EventListener> clazz, final EventListener listener) {
         return dispatchers.getOrDefault(clazz, EventDispatcherList.PSEUDO_EMPTY_DISPATCHER_LIST).getListenerCurrentCalls(listener);
     }
 
@@ -198,7 +198,7 @@ public final class EventDispatcher {
      * @param <T>      A specific EventListener type that extends from {@link java.util.EventListener} interface.
      * @return True if {@link java.util.function.Consumer} operation is successfully handled.
      */
-    public <T extends EventListener> boolean fireEvent(Class<T> clazz, Consumer<T> consumer) {
+    public <T extends EventListener> boolean fireEvent(final Class<T> clazz, final Consumer<T> consumer) {
         EventDispatcherList edl = dispatchers.get(clazz);
         if (Objects.nonNull(edl) && Objects.nonNull(consumer)) {
             //noinspection unchecked
@@ -217,7 +217,7 @@ public final class EventDispatcher {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }

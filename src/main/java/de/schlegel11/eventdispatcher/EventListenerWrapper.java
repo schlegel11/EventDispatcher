@@ -8,14 +8,19 @@ import java.util.Objects;
  */
 final class EventListenerWrapper {
 
+    public static final EventListenerWrapper DUMMY_ELW = new EventListenerWrapper();
     public final static int INFINITE_CALLS = -1;
     private final EventListener listener;
     private final int maxCalls;
     private int currentCalls;
 
-    public EventListenerWrapper(EventListener listener, int maxCalls) {
+    public EventListenerWrapper(final EventListener listener, final int maxCalls) {
         this.listener = listener;
         this.maxCalls = maxCalls;
+    }
+
+    private EventListenerWrapper() {
+        this(null, 0);
     }
 
     public EventListener getListener() {
@@ -30,7 +35,7 @@ final class EventListenerWrapper {
         return currentCalls;
     }
 
-    public void addCurrentCalls(int currentCalls) {
+    public void addCurrentCalls(final int currentCalls) {
         this.currentCalls += currentCalls;
     }
 
@@ -40,7 +45,7 @@ final class EventListenerWrapper {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }
