@@ -1,6 +1,11 @@
 # language setting
 language: java
 
+# build systems
+os:
+  - linux
+  - osx
+
 # jdk tag
 jdk:
  - oraclejdk8
