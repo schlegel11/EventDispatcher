@@ -17,8 +17,8 @@ import java.util.function.Consumer;
  */
 public final class EventDispatcher {
 
-    private static final String IS_NULL = "Argument is null.";
-    private static final String ARGUMENT_MAX_CALLS = "Argument is less or equal 0 (except -1).";
+    public static final String ARGUMENT_IS_NULL = "Argument is null.";
+    public static final String ARGUMENT_MAX_CALLS = "Argument is less or equal 0 (except -1).";
     private final Map<Class<? extends EventListener>, EventDispatcherList> dispatchers = Maps.newHashMap();
 
     private EventDispatcher() {
@@ -69,8 +69,8 @@ public final class EventDispatcher {
      * @return True if the current {@link de.schlegel11.eventdispatcher.EventDispatcher} did not already contain the specific {@code listener} instance.
      */
     public boolean addListener(final Class<? extends EventListener> clazz, final EventListener listener, final int maxCalls) {
-        Objects.requireNonNull(clazz, IS_NULL);
-        Objects.requireNonNull(listener, IS_NULL);
+        Objects.requireNonNull(clazz, ARGUMENT_IS_NULL);
+        Objects.requireNonNull(listener, ARGUMENT_IS_NULL);
         Preconditions.checkArgument(maxCalls > 0 || maxCalls == EventListenerWrapper.INFINITE_CALLS, ARGUMENT_MAX_CALLS);
         return dispatchers.computeIfAbsent(clazz, v -> new EventDispatcherList()).addListener(listener, maxCalls);
     }

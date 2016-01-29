@@ -33,13 +33,13 @@ class EventDispatcherTest extends Specification {
         eventDispatcher.addListener(null, listener)
         then:
         ex = thrown()
-        ex.message == "Argument is null."
+        ex.message == EventDispatcher.ARGUMENT_IS_NULL
 
         when:
         eventDispatcher.addListener(EventListener, null)
         then:
         ex = thrown()
-        ex.message == "Argument is null."
+        ex.message == EventDispatcher.ARGUMENT_IS_NULL
     }
 
     def "AddListener(maxCalls)Positive"() {
@@ -65,25 +65,25 @@ class EventDispatcherTest extends Specification {
         eventDispatcher.addListener(null, listener, 5)
         then:
         ex = thrown()
-        ex.message == "Argument is null."
+        ex.message == EventDispatcher.ARGUMENT_IS_NULL
 
         when:
         eventDispatcher.addListener(EventListener, null, 5)
         then:
         ex = thrown()
-        ex.message == "Argument is null."
+        ex.message == EventDispatcher.ARGUMENT_IS_NULL
 
         when:
         eventDispatcher.addListener(EventListener, listener, 0)
         then:
         iae = thrown()
-        iae.message == "Argument is less or equal 0 (except -1)."
+        iae.message == EventDispatcher.ARGUMENT_MAX_CALLS
 
         when:
         eventDispatcher.addListener(EventListener, listener, -2)
         then:
         iae = thrown()
-        iae.message == "Argument is less or equal 0 (except -1)."
+        iae.message == EventDispatcher.ARGUMENT_MAX_CALLS
     }
 
     def "RemoveListenerPositive"() {
