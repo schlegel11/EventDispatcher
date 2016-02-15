@@ -4,7 +4,6 @@ import com.google.common.collect.Sets;
 
 import java.util.EventListener;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
