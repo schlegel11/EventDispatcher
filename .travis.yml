@@ -33,5 +33,5 @@ addons:
       description: "Build submitted via Travis CI"
     notification_email: develop@schlegel11.de
     build_command_prepend: "mvn clean"
-    build_command:   "mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V"
+    build_command:   "mvn -DskipTests=true compile"
     branch_pattern: master
