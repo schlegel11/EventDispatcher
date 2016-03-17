@@ -19,3 +19,19 @@ notifications:
      email:
          recipients:
              - develop@schlegel11.de
+
+env:
+  global:
+   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+   #   via the "travis encrypt" command using the project repo's public key
+   - secure: "XRKkUr9YflkTxj33aZJQXx6cjFSyEKPCnYeLydBOD3vhElq/c8N4LUMsStMVDG+xLdfybCHujAhDvNwHUI0rRo9iaCabirLsmRcZI7qRGQPzZeZsPiZznaN2cJ2p7FpGNQp8lOz4CLcCATj3hx/UxCpEMDdmfbHacxWWxg9xFfQ="
+
+addons:
+  coverity_scan:
+    project:
+      name: "schlegel11/EventDispatcher"
+      description: "Build submitted via Travis CI"
+    notification_email: develop@schlegel11.de
+    build_command_prepend: "mvn clean"
+    build_command:   "mvn -DskipTests=true compile"
+    branch_pattern: coverity_scan
